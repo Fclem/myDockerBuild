@@ -49,9 +49,9 @@ function check_registry_is_valid() { # 1: get_url, 2: match_content, 3: custom_e
 
 function list_img_from_repo() { # 1: repository_json_input
 	echo $1 | python -c "import json,sys;obj=json.load(sys.stdin);
-	out='';
-	for each in obj['results']: out+=each['name']+', ';
-	print(out[:-2]);"
+out='';
+for each in obj['results']: out+=each['name']+', ';
+print(out[:-2]);"
 }
 
 echo -e $GREEN"Configuration script for this new Docker build system, please fill in some parameters :"$END_C
