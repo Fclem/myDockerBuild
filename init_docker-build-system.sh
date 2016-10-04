@@ -142,14 +142,15 @@ echo -ne $END_C
 get_url="$target_repository_url$target_repo/"
 check_object_exists "$get_url" "$no_repo" "$target_repo" "$target_repository_url"
 
+# listing existing images in this repo:
+echo -ne $L_CYAN"available images in $BOLD$repo$END_C:$END_C "
+list_objects_from_repo_or_img "$res"
+
 # target image name
 echo -ne "enter TARGET image name: "$BOLD
 read target_image
 echo -ne $END_C
 # do not check, since this could be a new image
-# listing existing images in this repo:
-echo -ne $L_CYAN"available images in $BOLD$repo$END_C:$END_C "
-list_objects_from_repo_or_img "$res"
 
 # target tag prefix
 echo -ne "enter TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
