@@ -14,12 +14,16 @@ A custom and personal docker build system
   $ git clone git@github.com:Fclem/myDockerBuild.git . ; and rm -fr .git; and \
   ./init_docker-build-system.sh
   ```
-2. Proceed to edit from-*/Dockerfile to include any desired changes
+2. Proceed to edit `from-*/Dockerfile` to include any desired changes
 3. Finaly build the new docker image
+  
   ```console
   $ ./build.sh
   ```
+
 4. Optionaly push your image to a preconfigured docker registry
+  
   ```console
   $ docker push repo/image
   ```
+
