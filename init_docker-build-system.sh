@@ -1,7 +1,7 @@
 #!/bin/bash
-###
-#  CONF & CONST
-###
+##################
+#  CONF & CONST  #
+##################
 default_tag_prefix=v
 valid_registry="{\"detail\": \"Object not found\"}"
 no_repo="{\"count\": 0, \"next\": null, \"previous\": null, \"results\": []}"
@@ -19,14 +19,8 @@ BOLD="\e[1m"
 #########################
 #  UTILITIES FUNCTIONS  #
 #########################
-function check_object_exists { # 1: get_url, 2: error_content, 3: object_name, 4: docker_registry_url, 5: custom_error_msg
-	# echo "curl -s "$1
+function check_object_exists() { # 1: get_url, 2: error_content, 3: object_name, 4: docker_registry_url, 5: custom_error_msg
 	res=`curl -s $1`
-	# echo $res
-	# echo "get_url: "$1
-	# echo "error_content: "$2
-	# echo "object_name: "$3
-	# echo "docker_registry_url: "$4
 	if [[ -z "$3" ]]; then
 		echo -e $RED"object name is empty"$END_C
 		exit
@@ -43,20 +37,19 @@ function check_object_exists { # 1: get_url, 2: error_content, 3: object_name, 4
 		echo -e "object $BOLD$3$END_C "$RED"not found"$END_C" at $BOLD$4$END_C"
 		exit
 	fi
-	#echo "must be \""$2"\"!=\""$res"\""
 }
 
-function check_registry_is_valid { # 1: get_url, 2: match_content, 3: custom_error_msg
+function check_registry_is_valid() { # 1: get_url, 2: match_content, 3: custom_error_msg
 	check_object_exists "$1" "" "registry" "$1" "$3"
-	 if [ "$2" != "$res" ]; then
+	if [ "$2" != "$res" ]; then
 		echo -e $RED"no valid docker registry found$END_C at target url $BOLD$1$END_C"
 		exit
 	fi
 }
 
-function list_images_from_repo {
+function list_img_from_repo() { # 1: repository_json_input
 	echo $1 | python -c "import json,sys;obj=json.load(sys.stdin);
-	out=''
+	out='';
 	for each in obj['results']: out+=each['name']+', ';
 	print(out[:-2]);"
 }
