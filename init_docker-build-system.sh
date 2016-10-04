@@ -143,7 +143,7 @@ get_url="$target_repository_url$target_repo/"
 check_object_exists "$get_url" "$no_repo" "$target_repo" "$target_repository_url"
 
 # listing existing images in this repo:
-echo -ne $L_CYAN"available images in $BOLD$repo$END_C:$END_C "
+echo -ne $L_CYAN"available images in $BOLD$target_repo$END_C:$END_C "
 list_objects_from_repo_or_img "$res"
 
 # target image name
