@@ -78,6 +78,14 @@ echo -ne $END_C
 get_url="$source_repository_url$repo/"
 check_object_exists "$get_url" "$no_repo" "$repo" "$source_repository_url"
 
+# listing existing images in this repo:
+# curl -s https://registry.hub.docker.com/v2/repositories/fimm/ | python -c "import json,sys;obj=json.load(sys.stdin);
+echo -n "available images in $repo: "
+echo $res | python -c "import json,sys;obj=json.load(sys.stdin);
+out=''
+for each in obj['results']: out+=each['name']+', ';
+print out[:-2];"
+
 # source image name
 echo -ne "enter SOURCE image name: "$BOLD
 read image
