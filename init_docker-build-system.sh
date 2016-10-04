@@ -54,6 +54,13 @@ function check_registry_is_valid { # 1: get_url, 2: match_content, 3: custom_err
 	fi
 }
 
+function list_images_from_repo {
+	echo $1 | python -c "import json,sys;obj=json.load(sys.stdin);
+	out=''
+	for each in obj['results']: out+=each['name']+', ';
+	print(out[:-2]);"
+}
+
 echo -e $GREEN"Configuration script for this new Docker build system, please fill in some parameters :"$END_C
 
 #################
@@ -79,12 +86,8 @@ get_url="$source_repository_url$repo/"
 check_object_exists "$get_url" "$no_repo" "$repo" "$source_repository_url"
 
 # listing existing images in this repo:
-# curl -s https://registry.hub.docker.com/v2/repositories/fimm/ | python -c "import json,sys;obj=json.load(sys.stdin);
 echo -n "available images in $repo: "
-echo $res | python -c "import json,sys;obj=json.load(sys.stdin);
-out=''
-for each in obj['results']: out+=each['name']+', ';
-print out[:-2];"
+list_images_from_repo $res
 
 # source image name
 echo -ne "enter SOURCE image name: "$BOLD
@@ -148,6 +151,9 @@ echo -ne "enter TARGET image name: "$BOLD
 read target_image
 echo -ne $END_C
 # do not check, since this could be a new image
+# listing existing images in this repo:
+echo -n "available images in $repo: "
+list_images_from_repo $res
 
 # target tag prefix
 echo -ne "enter TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
