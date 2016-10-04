@@ -127,32 +127,35 @@ if [[ -z "$target_repository_url" ]]; then
 fi
 get_url="$target_repository_url"
 check_registry_is_valid "$get_url" "$valid_registry" $RED"Unable to fetch from url"$END_C
-# check_object_exists "$get_url" "$no_registry" "docker registry" "$target_repository_url" $RED"no valid docker repository"$END_C" at"
 
 # target repository name
 echo -ne "enter TARGET repository name: "$BOLD
-read my_repo
+read target_repo
 echo -ne $END_C
+get_url="$target_repository_url$target_repo/"
+check_object_exists "$get_url" "$no_repo" "$target_repo" "$target_repository_url"
 
 # target image name
 echo -ne "enter TARGET image name: "$BOLD
-read my_image
+read target_image
 echo -ne $END_C
+# do not check, since this could be a new image
 
 # target tag prefix
-echo -ne "enter a TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
-read my_tag
+echo -ne "enter TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
+read target_tag
 echo -ne $END_C
-if [[ -z "$my_tag" ]]; then
-	my_tag=default_tag_prefix
+if [[ -z "$target_tag" ]]; then
+	target_tag=default_tag_prefix
 fi
+# no check
 
 # generating build_conf.sg that is used by all shell scripts, containing target image's repo name, name, and tag, and build source folder
 echo "### AUTO GENERATED ###
 build_source=$dir_name # CHANGE THIS to choose which Dockerfile to build from
-repo_name=$my_repo
-img_name=$my_image
-tag=v # this is the image tag prefix, which will be sufixed by an incremented version number
+repo_name=$target_repo
+img_name=$target_image
+tag=$target_tag # this is the image tag prefix, which will be sufixed by an incremented version number
 ### END GENERATED ###">build_conf.sh && echo -e $L_CYAN"Created$END_C build_conf.sh"
 
 ############
