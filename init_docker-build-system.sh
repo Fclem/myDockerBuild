@@ -47,7 +47,7 @@ function check_registry_is_valid() { # 1: get_url, 2: match_content, 3: custom_e
 	fi
 }
 
-function list_img_from_repo() { # 1: repository_json_input
+function list_objects_from_repo_or_img() { # 1: repository_json_input
 	echo "$1" | python -c "import json,sys;obj=json.load(sys.stdin);
 out='';
 for each in obj['results']: out+=each['name']+', ';
@@ -80,14 +80,17 @@ check_object_exists "$get_url" "$no_repo" "$repo" "$source_repository_url"
 
 # listing existing images in this repo:
 echo -ne $L_CYAN"available images in $BOLD$repo$END_C:$END_C "
-list_img_from_repo "$res"
+list_objects_from_repo_or_img "$res"
 
 # source image name
 echo -ne "enter SOURCE image name: "$BOLD
 read image
 echo -ne $END_C
-get_url="$source_repository_url$repo/$image/"
+get_url="$source_repository_url$repo/$image/tags/"
 check_object_exists "$get_url" "$no_image" "$image" "$source_repository_url$repo/"
+
+echo -ne $L_CYAN"available tags in $BOLD$repo/$image$END_C:$END_C "
+list_objects_from_repo_or_img "$res"
 
 # source tag name
 echo -ne "enter SOURCE tag name (leave blank for default \""$BOLD"latest"$END_C"\"): "$BOLD
@@ -146,7 +149,7 @@ echo -ne $END_C
 # do not check, since this could be a new image
 # listing existing images in this repo:
 echo -ne $L_CYAN"available images in $BOLD$repo$END_C:$END_C "
-list_img_from_repo "$res"
+list_objects_from_repo_or_img "$res"
 
 # target tag prefix
 echo -ne "enter TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
