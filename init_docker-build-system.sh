@@ -54,14 +54,17 @@ function check_registry_is_valid { # 1: get_url, 2: match_content, 3: custom_err
 	fi
 }
 
+echo -e $GREEN"Configuration script for this new Docker build system, please fill in some parameters :"$END_C
+
 #################
 #  SOURCE INFO  #
 #################
 echo -e $L_CYAN"### Docker SOURCE configuration : ###"$END_C
 
 # source registry url
-echo -ne "enter a valid SOURCE v2 docker registry url (leave blank for default \"$BOLD$docker_hub_url$END_C\"): "
+echo -ne "enter a valid SOURCE v2 docker registry url (leave blank for default \"$BOLD$docker_hub_url$END_C\"): "$BOLD
 read source_repository_url
+echo -ne $END_C
 if [[ -z "$source_repository_url" ]]; then
 	source_repository_url=$docker_hub_url
 fi
@@ -69,20 +72,23 @@ get_url="$source_repository_url"
 check_registry_is_valid "$get_url" "$valid_registry" $RED"Unable to fetch from url"$END_C
 
 # source repository name
-echo -n "enter SOURCE repository name: "
+echo -ne "enter SOURCE repository name: "$BOLD
 read repo
+echo -ne $END_C
 get_url="$source_repository_url$repo/"
 check_object_exists "$get_url" "$no_repo" "$repo" "$source_repository_url"
 
 # source image name
-echo -n "enter SOURCE image name: "
+echo -ne "enter SOURCE image name: "$BOLD
 read image
+echo -ne $END_C
 get_url="$source_repository_url$repo/$image/"
 check_object_exists "$get_url" "$no_image" "$image" "$source_repository_url$repo/"
 
 # source tag name
-echo -ne "enter SOURCE tag name (leave blank for default \""$BOLD"latest"$END_C"\"): "
+echo -ne "enter SOURCE tag name (leave blank for default \""$BOLD"latest"$END_C"\"): "$BOLD
 read tag
+echo -ne $END_C
 if [[ -z "$tag" ]]; then
 	tag=latest
 fi
@@ -94,8 +100,9 @@ check_object_exists "$get_url" "$no_tag" "$tag" "$source_repository_url$repo/$im
 ###################
 
 # maintainer email address
-echo -n "enter your email address: "
+echo -ne "enter your email address: "$BOLD
 read email
+echo -ne $END_C
 
 # create the Dockerfile directory
 full_img_name=$repo/$image:$tag
@@ -112,8 +119,9 @@ MAINTAINER $email
 echo -e $L_CYAN"### Docker TARGET configuration : ###"$END_C
 
 # target registry url
-echo -ne "enter a valid TARGET v2 docker registry url (leave blank for default \"$BOLD$docker_hub_url$END_C\"): "
+echo -ne "enter a valid TARGET v2 docker registry url (leave blank for default \"$BOLD$docker_hub_url$END_C\"): "$BOLD
 read target_repository_url
+echo -ne $END_C
 if [[ -z "$target_repository_url" ]]; then
 	target_repository_url=$docker_hub_url
 fi
@@ -122,16 +130,19 @@ check_registry_is_valid "$get_url" "$valid_registry" $RED"Unable to fetch from u
 # check_object_exists "$get_url" "$no_registry" "docker registry" "$target_repository_url" $RED"no valid docker repository"$END_C" at"
 
 # target repository name
-echo -n "enter TARGET repository name :"
+echo -ne "enter TARGET repository name: "$BOLD
 read my_repo
+echo -ne $END_C
 
 # target image name
-echo -n "enter TARGET image name :"
+echo -ne "enter TARGET image name: "$BOLD
 read my_image
+echo -ne $END_C
 
 # target tag prefix
-echo -ne "enter a TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "
+echo -ne "enter a TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
 read my_tag
+echo -ne $END_C
 if [[ -z "$my_tag" ]]; then
 	my_tag=default_tag_prefix
 fi
@@ -147,13 +158,13 @@ tag=v # this is the image tag prefix, which will be sufixed by an incremented ve
 ############
 #  DOCKER  #
 ############
-echo "docker pull $full_img_name"
+echo -e $L_CYAN"Pulling $full_img_name from registry"$END_C
 docker pull $full_img_name
 
 ######################
 #  FILE PERMISSIONS  #
 ######################
-chmod u+x build.sh run.sh
-rm init_docker-build-system.sh
+# chmod u+x build.sh run.sh
+rm init_docker-build-system.sh # delete self
 
-echo "DONE !"
+echo -e $GREEN"DONE !"$END_C
