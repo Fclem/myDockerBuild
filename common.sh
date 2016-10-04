@@ -1,7 +1,7 @@
 # this file contains configuraiton on how versioning will be done
 # inits the version file to 0
 # compiles the image full name (with tag prefix and version number suffix) into img_full_name
-source common.sh
+source build_conf.sh
 
 rel_path=`dirname "${BASH_SOURCE}/"`/
 if [ ! -f $rel_path.version ];
@@ -18,3 +18,4 @@ RED="\e[91m"
 L_CYAN="\e[96m"
 L_YELL="\e[93m"
 GREEN="\e[32m"
+BOLD="\e[1m"
