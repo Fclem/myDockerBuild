@@ -3,7 +3,7 @@ A custom and personal docker build system
 
 ## Usage
 
-Copy paste this line in terminal, from the desired target empty directory :
+Copy paste this line in a terminal, within the desired empty target directory :
 
 * with **bash**:
 ```console
