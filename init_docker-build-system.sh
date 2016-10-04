@@ -154,5 +154,6 @@ docker pull $full_img_name
 #  FILE PERMISSIONS  #
 ######################
 chmod u+x build.sh run.sh
+rm init_docker-build-system.sh
 
 echo "DONE !"
