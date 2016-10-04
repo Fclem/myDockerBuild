@@ -5,7 +5,7 @@ A custom and personal docker build system
 
 1. create a directory to which you want to clone the docker build system, and cd into that directory
 
-2. copy paste this lines sequentially :
+2. copy paste these lines sequentially :
 ```console
 $ git clone git@github.com:Fclem/myDockerBuild.git . && rm -fr .git
 
