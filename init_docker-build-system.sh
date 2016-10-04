@@ -80,7 +80,7 @@ check_object_exists "$get_url" "$no_repo" "$repo" "$source_repository_url"
 
 # listing existing images in this repo:
 echo -n "available images in $repo: "
-list_images_from_repo $res
+list_img_from_repo $res
 
 # source image name
 echo -ne "enter SOURCE image name: "$BOLD
@@ -146,7 +146,7 @@ echo -ne $END_C
 # do not check, since this could be a new image
 # listing existing images in this repo:
 echo -n "available images in $repo: "
-list_images_from_repo $res
+list_img_from_repo $res
 
 # target tag prefix
 echo -ne "enter TARGET tag prefix (leave blank for default \"$BOLD$default_tag_prefix$END_C\", tag will be automaticaly suffixed with a version number): "$BOLD
