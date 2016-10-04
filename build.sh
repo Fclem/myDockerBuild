@@ -1,6 +1,6 @@
 #!/bin/bash
-
-source build_conf.sh
+# does the build, increment the version number and rotate old latest version
+source common.sh
 
 ((version++))
 
