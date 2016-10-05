@@ -163,7 +163,7 @@ fi
 
 # generating build_conf.sg that is used by all shell scripts, containing target image's repo name, name, and tag, and build source folder
 echo "### AUTO GENERATED ###
-build_source=$dir_name # CHANGE THIS to choose which Dockerfile to build from
+build_source=\"$dir_name\" # CHANGE THIS to choose which Dockerfile to build from
 repo_name=$target_repo
 img_name=$target_image
 tag=$target_tag # this is the image tag prefix, which will be sufixed by an incremented version number
