@@ -16,6 +16,9 @@ L_YELL="\e[93m"
 GREEN="\e[32m"
 BOLD="\e[1m"
 
+# safety
+if [ "$(basename `pwd`)" == "myDockerBuild" ]; then exit; fi
+
 #########################
 #  UTILITIES FUNCTIONS  #
 #########################
@@ -178,7 +181,10 @@ docker pull $full_img_name
 ######################
 #  FILE PERMISSIONS  #
 ######################
-# chmod u+x build.sh run.sh
 rm init_docker-build-system.sh # delete self
+# removes git related files
+rm README.md
+rm .gitignore
+rm -fr .git
 
 echo -e $GREEN"DONE !"$END_C
