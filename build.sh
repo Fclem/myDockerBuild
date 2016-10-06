@@ -8,6 +8,9 @@ source common.sh
 
 ((version++))
 
+# now=`date --rfc-3339=second | sed 's/ /T/'` # no space version
+now=`date --rfc-3339=second`
+
 # subfolder list and count
 folders=`find . -mindepth 1 -maxdepth 1 -type d  \( ! -iname ".*" \) | sed 's|^\./||g'`
 folders_num=`echo "$folders" | wc -l`
@@ -59,7 +62,7 @@ if [ "$folders_num" -ge "2" ]; then
 		if [[ $REPLY =~ ^[Yy]$ ]]
 		then
 			# writes the new default into build_conf.sh (incremental write, do not overwrite the whole file)
-			echo "build_source=\"$d\" # changed "`date --rfc-3339=second`>>build_conf.sh
+			echo "build_source=\"$d\" # changed $now">>build_conf.sh
 		fi
 	fi
 fi
