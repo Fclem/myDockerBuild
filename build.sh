@@ -122,8 +122,6 @@ dock_from=${dock_from/"FROM "/""}
 # display it
 echo -e "Source in Dockerfile is: $L_CYAN$BOLD$dock_from$END_C"
 
-exit
-
 # build and writes incremented build version on success
 docker build -t $repo_name/$img_name $build_source/ && echo ${version}>.version && \
 	docker tag $repo_name/$img_name $img_full_name
